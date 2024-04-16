@@ -24,7 +24,7 @@
             <span class="navbar-brand mb-0 h1">SiVaEm - Sistema de Vagas de Emprego</span>
         </div>
     </nav>
-    <div class="container">
+    <div class="container px-4 text-center">
         <h2>Editar Vaga</h2>
         <form id="editForm">
             <div class="mb-3">
@@ -43,22 +43,12 @@
                 <label for="salario" class="form-label">Salário:</label>
                 <input type="text" class="form-control" id="salario" name="salario" required>
             </div>
-            <button type="submit" class="btn btn-primary">Salvar</button>
-            <a href="/sivaem-web-main/view/adicionar_vaga.php" class="btn btn-secondary">Cancelar</a>
+            <button type="submit" class="btn btn-info">Salvar</button>
+            <a href="/sivaem-web-main/view/adicionar_vaga.php" class="btn btn-outline-danger">Cancelar</a>
         </form>
     </div>
 
-    <footer>
-        <div class="fixed-bottom">
-            <div class="p-1 mb-0">
-                <div class="text-black bg-info">
-                    <div class="text-center"> 
-                        Ellen Woellner / Leonardo Suzin / Vinícius Souza - UTFPR 2024 ©
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <?php include "footer.php";?>
 
     <script>
         document.getElementById('editForm').addEventListener('submit', function(event) {

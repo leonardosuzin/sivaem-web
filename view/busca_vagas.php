@@ -13,6 +13,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Busca de Vagas</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
@@ -23,7 +25,7 @@
             <span class="navbar-brand mb-0 h1">SiVaEm - Sistema de Vagas de Emprego</span>
         </div>
     </nav>
-    <div class="container">
+    <div class="container px-4 text-center"">
         <h2>Busca de Vagas</h2>
         <form id="formBusca">
             <label for="cargo">Cargo:</label>
@@ -35,6 +37,7 @@
         <a href="/sivaem-web-main/view/adicionar_curriculo.php"><input type="button" class="btn btn-outline-warning" value="Cadastrar Currículo"></a>
         <a href="/sivaem-web-main/control/logout.php"><input type="button" class="btn btn-outline-danger" value="Voltar"></a>
     </div>
+    <?php include "footer.php";?>
 
     <script>
     // Adiciona um evento de "submit" ao formulário com o id 'formBusca'
@@ -71,15 +74,4 @@
     });
 </script>
 </body>
-<footer>
-        <div class="fixed-bottom">
-			<div class="p-1 mb-0">
-				<div class="text-black bg-info">
-					<div class="text-center"> 
-                        Ellen Woellner / Leonardo Suzin / Vinícius Souza - UTFPR 2024 ©
-					</div>
-				</div>
-			</div>
-		</div>
-    </footer>
 </html>
