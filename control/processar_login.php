@@ -9,13 +9,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $password = $_POST['password'];
 
         // Conectar ao banco de dados
-        $conn = new mysqli('localhost', 'seu_usuario', 'sua_senha', 'site_vagas');
+        $conn = new mysqli('localhost', 'root', '', 'site_vagas');
         if ($conn->connect_error) {
             die("Erro de conexão: " . $conn->connect_error);
         }
 
         // Consultar o banco de dados para verificar as credenciais
-        $stmt = $conn->prepare("SELECT username, password FROM usuarios WHERE username = ?");
+        $stmt = $conn->prepare("SELECT username, password FROM usuario WHERE username = ?");
         $stmt->bind_param("s", $username);
         $stmt->execute();
         $result = $stmt->get_result();

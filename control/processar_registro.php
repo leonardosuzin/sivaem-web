@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
         // Preparar e executar a consulta SQL para inserir o novo usuário
-        $stmt = $conn->prepare("INSERT INTO usuarios (username, password, tipo_usuario) VALUES (?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO usuario (username, password, tipo_usuario) VALUES (?, ?, ?)");
         $stmt->bind_param("sss", $username, $hashed_password, $tipo_usuario);
         $stmt->execute();
 

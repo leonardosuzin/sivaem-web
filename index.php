@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Credenciais válidas, iniciar sessão e redirecionar para a página de cadastro de vaga
             $_SESSION['loggedin'] = true;
             $_SESSION['username'] = $username;
-            header("Location: adicionar_vaga.php");
+            header("Location: /sivaem-web-main/view/adicionar_vaga.php");
             exit;
         } else {
             // Verificar se as credenciais são válidas para o candidato
@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Credenciais válidas, iniciar sessão e redirecionar para a página de busca de vagas
                 $_SESSION['loggedin'] = true;
                 $_SESSION['username'] = $username;
-                header("Location: busca_vagas.php");
+                header("Location: /sivaem-web-main/view/busca_vagas.php");
                 exit;
             } else {
                 // Credenciais inválidas, exibir mensagem de erro
@@ -63,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <tr><td>
                     <br>
                     <input type="submit" class="btn btn-info" value="Login">
-                    <a href="/teste/view/registro.php"><input type="button" class="btn btn-outline-primary" value="Cadastre-se"></a>
+                    <a href="/sivaem-web-main/view/registro.php"><input type="button" class="btn btn-outline-primary" value="Cadastre-se"></a>
                 </td>
                 </tr>
                 </table>
@@ -77,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			<div class="p-1 mb-0">
 				<div class="text-black bg-info">
 					<div class="text-center"> 
-                        Ellen Woellner / Leonardo Suzin - UTFPR 2024 ©
+                        Ellen Woellner / Leonardo Suzin / Vinícius Souza - UTFPR 2024 ©
 					</div>
 				</div>
 			</div>
