@@ -14,16 +14,8 @@ Insira os arquivos na pasta C:\xampp\htdocs\sivaem-web-main e acesse http://loca
 
 É necessário utilizar um banco de dados SQL para poder utilizar a função de dados do servidor. Para isto, acesse http://localhost/phpmyadmin/. O script para criação do banco encontra-se na pasta C:\xampp\htdocs\sivaem-web-main\database.
 
-Para acessar os usuários utilize:
-
-Para cadastro de vagas de emprego:
-Login: empresa
-Senha: 123456
-
-Para consultar vagas e enviar seu currículo acesse:
-Login: candidato
-Senha: 123456
+Para acessar os usuários, crie um cadastro de cada tipo, para acessar suas respectivas telas.
 
 
 
-
+#

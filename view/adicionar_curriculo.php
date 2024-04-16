@@ -3,7 +3,7 @@
     session_start();
 
     //caso a sessão não exista, redireciona para o login
-    if(empty($_SESSION['loggedin']) || $_SESSION['loggedin'] == false){
+    if(empty($_SESSION['loggedin']) || $_SESSION['loggedin'] == false || $_SESSION['tipo_user'] == 2){
         header('location: /sivaem-web-main/index.php');
     }
 

@@ -38,12 +38,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             echo "Erro ao adicionar currículo: " . $stmt->error;
         }
+        // Fechar a conexão
         $stmt->close();
-         $conexao->close();
+        $conexao->close();
     }
    
+}
 
-    // Fechar a conexão
-    
+//receber informações das curriculos
+if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['cargo'])) {
+    // Conectar ao banco de dados
+    $conn = new mysqli('localhost', 'root', '', 'site_vagas');
+    if ($conn->connect_error) {
+        die("Erro de conexão: " . $conn->connect_error);
+    }
+
+    // Recuperar currículos do banco de dados com base no cargo fornecido
+    $cargo = $_GET['cargo'];
+    $sql = "SELECT * FROM curriculo WHERE cargo LIKE '%$cargo%'";
+    $result = $conn->query($sql);
+    // Exibir currículos encontrados
+    if ($result->num_rows > 0) {
+        echo "<h3>Currículos encontrados:</h3>";
+        while ($row = $result->fetch_assoc()) {
+            echo "<p><strong>Perfil Pessoal:</strong> " . $row['descricao'] . "<br>";
+            echo "<p><strong>Cargo desejado:</strong> " . $row['cargo'] . "<br>";
+            echo "<strong>Experiencias anteriores:</strong> " . $row['experiencia'] . "<br>";
+            echo "<strong>Salário desejado:</strong> " . $row['salario'] . "</p>";
+        }
+    } else {
+        echo "<p>Nenhum currículo encontrado.</p>";
+    }
+    $conn -> close();
 }
 ?>
