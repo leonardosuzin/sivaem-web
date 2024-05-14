@@ -3,7 +3,7 @@
     "type": "library",
     "license": "MIT",
     "autoload": {
-        "classmap": ["./sivaem-web-main"]
+        "classmap": ["./"]
     },
     "require": {}
 }
