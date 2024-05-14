@@ -1,11 +1,13 @@
 <?php
-//verifica se a sessão existe e está correta
-    session_start();
 
-    //caso a sessão não exista, redireciona para o login
-    if(empty($_SESSION['loggedin']) || $_SESSION['loggedin'] == false || $_SESSION['tipo_user'] == 2){
-        header('location: /sivaem-web-main/index.php');
-    }
+// Inclua o arquivo SessionManager.php
+require __DIR__ . '/../vendor/autoload.php';
+
+// Crie uma instância da classe SessionManager
+$sessionManager = new SessionManager();
+
+// Chame o método checkSession() para verificar a sessão
+$sessionManager->checkSessionCliente();
 
 ?>
 
@@ -25,48 +27,72 @@
     </nav>
     <div class="container px-4 text-center">
         <h2>Adicionar Currículo</h2>
-        <form id="formAdicionarCurr" action="/sivaem-web-main/control/processar_curriculo.php" method="post">    
+        <form id="formAdicionarCurr">    
             <label for="descricao">Perfil pessoal:</label><br>
             <textarea id="descricao" name="descricao" required></textarea><br><br>
             <label for="cargo">Cargo desejado:</label><br>
             <input type="text" id="cargo" name="cargo" required><br><br>
-            <label for="experiencias">Experiencias Previas:</label><br>
+            <label for="experiencias">Experiências Anteriores:</label><br>
             <textarea id="experiencias" name="experiencias" required></textarea><br><br>
             <label for="salario">Salário desejado:</label><br>
             <input type="text" id="salario" name="salario" required><br><br>
-            <button type="submit" class="btn btn-info">Adicionar Curriculo</button>
+            <button type="button" id="btnAdicionar" class="btn btn-info">Adicionar Currículo</button>
         </form>
-        
+
+        <p></p>
+        <a href="/sivaem-web-main/view/alterar_curriculo.php"><input type="button" class="btn btn-outline-success" value="Alterar Currículo"></a>
+        <a href="/sivaem-web-main/view/excluir_curriculo.php"><input type="button" class="btn btn-outline-warning" value="Excluir Currículo"></a>
         <div id="resultadoAdicionarCurriculo"></div>
+        <p></p>
+        
+        <div id="resultadoBuscarCurriculos"></div>
         <p></p>
         <a href="/sivaem-web-main/view/busca_vagas.php"><input type="button" class="btn btn-outline-danger" value="Voltar"></a>
     </div>
     <?php include "footer.php";?>
-<script>
-document.getElementById('formAdicionarCurr').addEventListener('submit', function(event) {
-    event.preventDefault();
-    const form = this;
-    const formData = new FormData(form);
 
-    fetch(form.action, {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Erro ao adicionar currículo');
-        }
-        return response.text();
-    })
-    .then(data => {
-        document.getElementById('resultadoAdicionarCurriculo').innerHTML = data;
-    })
-    .catch(error => {
-        console.error(error.message);
-        alert('Erro ao adicionar currículo');
-    });
-});
+    <script>
+        document.getElementById('btnAdicionar').addEventListener('click', function(event) {
+            event.preventDefault();
+            const descricao = document.getElementById('descricao').value;
+            const cargo = document.getElementById('cargo').value;
+            const experiencias = document.getElementById('experiencias').value;
+            const salario = document.getElementById('salario').value;
 
-</script>
+            const formData = new FormData();
+            formData.append('descricao', descricao);
+            formData.append('cargo', cargo);
+            formData.append('experiencias', experiencias);
+            formData.append('salario', salario);
+
+            fetch("/sivaem-web-main/control/processar_curriculo.php", {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('resultadoAdicionarCurriculo').innerHTML = data;
+            })
+            .catch(error => {
+                console.error(error.message);
+                alert('Erro ao adicionar currículo');
+            });
+        });
+
+        document.getElementById('btnBuscar').addEventListener('click', function(event) {
+            event.preventDefault();
+            const cargoBusca = document.getElementById('cargoBusca').value;
+
+            fetch(`/sivaem-web-main/control/processar_curriculos.php?cargo=${cargoBusca}`)
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('resultadoBuscarCurriculos').innerHTML = data;
+            })
+            .catch(error => {
+                console.error(error.message);
+                alert('Erro ao buscar currículos');
+            });
+        });
+    </script>
 </body>
 </html>

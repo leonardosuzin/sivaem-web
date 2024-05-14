@@ -1,14 +1,14 @@
 <?php
-//verifica se a sessão existe e está correta
-    session_start();
+// Inclua o arquivo SessionManager.php
+require __DIR__ . '/../vendor/autoload.php';
 
-    //caso a sessão não exista, redireciona para o login
-    if(empty($_SESSION['loggedin']) || $_SESSION['loggedin'] == false || $_SESSION['tipo_user'] == 1){
-        header('location: /sivaem-web-main/index.php');
-    }
+// Crie uma instância da classe SessionManager
+$sessionManager = new SessionManager();
+
+// Chame o método checkSession() para verificar a sessão
+$sessionManager->checkSessionEmpresa();
 
 ?>
-
 
 <!DOCTYPE html>
 <html>
@@ -51,18 +51,27 @@
 
     // Define uma função para ser executada quando o estado da solicitação mudar
     xhr.onreadystatechange = function() {
-        // Verifica se a solicitação foi concluída
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            // Verifica se a solicitação foi bem-sucedida (status 200)
-            if (xhr.status === 200) {
-                // Atualiza o conteúdo da div 'resultadoBusca' com a resposta da solicitação
-                document.getElementById('resultadoBusca').innerHTML = xhr.responseText;
-            } else {
-                // Exibe uma mensagem de erro no console do navegador
-                console.error('Ocorreu um erro ao enviar a solicitação.');
+    if (xhr.readyState === XMLHttpRequest.DONE) {
+        if (xhr.status === 200) {
+            var curriculos = JSON.parse(xhr.responseText);
+            var resultadoHTML = "";
+            for (var i = 0; i < curriculos.length; i++) {
+                resultadoHTML += "<div>";
+                resultadoHTML += "<p> Nome do funcionário:" + curriculos[i].nome + "</p>";
+                resultadoHTML += "<p> Perfil do funcionário:" + curriculos[i].descricao + "</p>";
+                resultadoHTML += "<p> Cargo desejado:" + curriculos[i].cargo + "</p>";
+                resultadoHTML += "<p> Experiência prévia:" + curriculos[i].experiencia + "</p>";
+                resultadoHTML += "<p> Salario desejado" + curriculos[i].salario + "</p>";
+                resultadoHTML += "---------------------------------------------------";
+                resultadoHTML += "</div>";
             }
+            
+            document.getElementById('resultadoBusca').innerHTML = "<div style='text-align: center;'>" + resultadoHTML + "</div>";
+        } else {
+            console.error('Ocorreu um erro ao enviar a solicitação.');
         }
-    };
+    }
+};
 
     // Abre a conexão com o servidor e configura a solicitação GET para buscar currículos
     xhr.open("GET", "/sivaem-web-main/control/processar_curriculo.php?cargo=" + cargo, true);

@@ -1,14 +1,15 @@
 <?php
-//verifica se a sessão existe e está correta
-    session_start();
 
-    //caso a sessão não exista, redireciona para o login
-    if(empty($_SESSION['loggedin']) || $_SESSION['loggedin'] == false || $_SESSION['tipo_user'] == 2){
-        header('location: /sivaem-web-main/index.php');
-    }
+// Inclua o arquivo SessionManager.php
+require __DIR__ . '/../vendor/autoload.php';
+
+// Crie uma instância da classe SessionManager
+$sessionManager = new SessionManager();
+
+// Chame o método checkSession() para verificar a sessão
+$sessionManager->checkSessionCliente();
 
 ?>
-
 
 <!DOCTYPE html>
 <html>
@@ -25,7 +26,7 @@
             <span class="navbar-brand mb-0 h1">SiVaEm - Sistema de Vagas de Emprego</span>
         </div>
     </nav>
-    <div class="container px-4 text-center"">
+    <div class="container px-4 text-center">
         <h2>Busca de Vagas</h2>
         <form id="formBusca">
             <label for="cargo">Cargo:</label>
@@ -40,36 +41,35 @@
     <?php include "footer.php";?>
 
     <script>
-    // Adiciona um evento de "submit" ao formulário com o id 'formBusca'
     document.getElementById('formBusca').addEventListener('submit', function(event) {
-        // Evita que o comportamento padrão do formulário (recarregar a página) ocorra
-        event.preventDefault(); 
-
-        // Obtém o valor do campo de entrada com o id 'cargo'
+        event.preventDefault();
         var cargo = document.getElementById('cargo').value;
-
-        // Cria um novo objeto XMLHttpRequest para fazer a solicitação AJAX
         var xhr = new XMLHttpRequest();
-
-        // Define uma função para ser executada quando o estado da solicitação mudar
         xhr.onreadystatechange = function() {
-            // Verifica se a solicitação foi concluída
             if (xhr.readyState === XMLHttpRequest.DONE) {
-                // Verifica se a solicitação foi bem-sucedida (status 200)
                 if (xhr.status === 200) {
-                    // Atualiza o conteúdo da div 'resultadoBusca' com a resposta da solicitação
-                    document.getElementById('resultadoBusca').innerHTML = xhr.responseText;
+                    var vagas = JSON.parse(xhr.responseText);
+                    var resultadoHTML = "";
+                    if (vagas.length > 0) {
+                        for (var i = 0; i < vagas.length; i++) {
+                            resultadoHTML += "<div>";
+                            resultadoHTML += "<p>Descrição: " + vagas[i].descricao + "</p>";
+                            resultadoHTML += "<p>Cargo: " + vagas[i].cargo + "</p>";
+                            resultadoHTML += "<p>Salário: " + vagas[i].salario + "</p>";
+                            resultadoHTML += "---------------------------------------------------";
+                            resultadoHTML += "</div>";
+                        }
+                    } else {
+                        resultadoHTML = "<p>Nenhuma vaga encontrada.</p>";
+                    }
+                    resultadoHTML += "</table>";
+                    document.getElementById('resultadoBusca').innerHTML = resultadoHTML;
                 } else {
-                    // Exibe uma mensagem de erro no console do navegador
                     console.error('Ocorreu um erro ao enviar a solicitação.');
                 }
             }
         };
-
-        // Abre a conexão com o servidor e configura a solicitação GET
         xhr.open("GET", "/sivaem-web-main/control/processar_vaga.php?cargo=" + cargo, true);
-        
-        // Envia a solicitação para o servidor
         xhr.send();
     });
 </script>

@@ -16,6 +16,9 @@ Insira os arquivos na pasta C:\xampp\htdocs\sivaem-web-main e acesse http://loca
 
 Para acessar os usuários, crie um cadastro de cada tipo, para acessar suas respectivas telas.
 
+É necessário realizar a instalação do composer para o projeto. Para iniciar a instalação, deve-se usar o comando composer install.
+
+Após a instalação do composer, é necessário instalar o pacote de rotas, através do comando composer require pecee/simple-router.
 
 
 #

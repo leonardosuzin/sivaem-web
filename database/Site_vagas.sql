@@ -12,6 +12,7 @@ CREATE TABLE `usuario` (
 
 CREATE TABLE `vaga` (
  `vaga_id` int(11) NOT NULL AUTO_INCREMENT,
+ `nome` varchar(255) DEFAULT NULL,
  `descricao` varchar(255) DEFAULT NULL,
  `cargo` varchar(255) DEFAULT NULL,
  `salario` double(10,2) DEFAULT NULL,
@@ -19,10 +20,11 @@ CREATE TABLE `vaga` (
 );
 
 CREATE TABLE `curriculo` (
- `curriculo_id` int(11) NOT NULL AUTO_INCREMENT,
- `descricao` varchar(255) DEFAULT NULL,
- `cargo` varchar(255) DEFAULT NULL,
- `experiencia` varchar(255) DEFAULT NULL,
- `salario` double(10,2) DEFAULT NULL,
- PRIMARY KEY (`curriculo_id`)
-);
+  `curriculo_id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(255) DEFAULT NULL,
+  `descricao` varchar(255) DEFAULT NULL,
+  `cargo` varchar(255) DEFAULT NULL,
+  `experiencia` varchar(255) DEFAULT NULL,
+  `salario` double(10,2) DEFAULT NULL,
+  PRIMARY KEY (`curriculo_id`)
+) 

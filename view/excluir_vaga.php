@@ -1,22 +1,18 @@
-<?php
-// Inclua o arquivo SessionManager.php
-require __DIR__ . '/../vendor/autoload.php';
-
-// Crie uma instância da classe SessionManager
-$sessionManager = new SessionManager();
-
-// Chame o método checkSession() para verificar a sessão
-$sessionManager->checkSessionEmpresa();
-
-?>
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Vaga</title>
+    <title>Excluir Vaga</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <style>
+        .vaga {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar bg-info">
@@ -25,39 +21,21 @@ $sessionManager->checkSessionEmpresa();
         </div>
     </nav>
     <div class="container px-4 text-center">
-        <h2>Editar Vaga</h2>
+        <h2>Excluir Vaga</h2>
         <form id="editForm">
             <div class="mb-3">
                 <label for="vaga_id" class="form-label">ID da Vaga:</label>
                 <input type="text" class="form-control" id="vaga_id" name="vaga_id" required>
-            </div>
-            <div class="mb-3">
-                <label for="descricao" class="form-label">Descrição:</label>
-                <input type="text" class="form-control" id="descricao" name="descricao" required>
-            </div>
-            <div class="mb-3">
-                <label for="cargo" class="form-label">Cargo:</label>
-                <input type="text" class="form-control" id="cargo" name="cargo" required>
-            </div>
-            <div class="mb-3">
-                <label for="salario" class="form-label">Salário:</label>
-                <input type="text" class="form-control" id="salario" name="salario" required>
-            </div>
-            <button type="submit" class="btn btn-info">Salvar</button>
-            <a href="/sivaem-web-main/view/excluir_vaga.php"><input type="button" class="btn btn-outline-warning" value="Excluir Vaga"></a>
-            <a href="/sivaem-web-main/view/adicionar_vaga.php" class="btn btn-outline-danger">Cancelar</a>
+            <button type="submit" class="btn btn-info">Excluir</button>
+            <a href="/sivaem-web-main/view/editar_vaga.php" class="btn btn-outline-danger">Cancelar</a>
         </form>
         <div id="resposta"></div>
-        <div id="vagas"></div> 
+        <div id="vagas"></div>
     </div>
 
     <?php include "footer.php";?>
 
     <script>
-
-        window.onload = function() {
-            buscarVagasSemParametro();
-        };
         // Função para buscar vagas sem um parâmetro específico
         function buscarVagasSemParametro() {
             var xhr = new XMLHttpRequest();
@@ -87,30 +65,35 @@ $sessionManager->checkSessionEmpresa();
             xhr.send();
         }
 
+        // Chamando a função de busca ao carregar a página
+        window.onload = function() {
+            buscarVagasSemParametro();
+        };
+
+        // Adicionando evento de submit ao formulário
         document.getElementById('editForm').addEventListener('submit', function(event) {
             event.preventDefault();
             var form = this;
-        var formData = new FormData(form);
-        var vagaId = formData.get('vaga_id');
-
-        var request = new XMLHttpRequest();
-        request.onreadystatechange = function() {
-            if (request.readyState === XMLHttpRequest.DONE) {
-                if (request.status === 200) {
-                    document.getElementById('resposta').innerText = request.responseText;
-                } else {
-                    console.error('Erro ao editar vaga');
-                    alert('Erro ao editar vaga');
+            var formData = new FormData(form);
+            
+            var request = new XMLHttpRequest();
+            request.onreadystatechange = function() {
+                if (request.readyState === XMLHttpRequest.DONE) {
+                    if (request.status === 200) {
+                        document.getElementById('resposta').innerText = request.responseText;
+                        // Atualizando a lista de vagas após a exclusão
+                        buscarVagasSemParametro();
+                    } else {
+                        console.error('Erro ao excluir vaga');
+                        alert('Erro ao excluir vaga');
+                    }
                 }
-            }
-        };
+            };
 
-        
-
-        request.open("PUT", "/sivaem-web-main/control/processar_vaga.php?id=" + vagaId, true);
-        request.setRequestHeader("Content-Type", "application/json");
-        request.send(JSON.stringify(Object.fromEntries(formData)));
-    });
-</script>
+            // Utilizando o método DELETE e apenas o ID da vaga como parâmetro
+            request.open("DELETE", "/sivaem-web-main/control/processar_vaga.php?vaga_id=" + formData.get('vaga_id'), true);
+            request.send();
+        });
+    </script>
 </body>
 </html>

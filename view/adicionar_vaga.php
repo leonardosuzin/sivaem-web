@@ -1,16 +1,3 @@
-<?php
-//verifica se a sessão existe e está correta
-    session_start();
-
-    //caso a sessão não exista, redireciona para o login
-    if(empty($_SESSION['loggedin']) || $_SESSION['loggedin'] == false || $_SESSION['tipo_user'] == 1){
-        header('location: /sivaem-web-main/index.php');
-    }
-
-
-?>
-
-
 <!DOCTYPE html>
 <html>
 <head>
