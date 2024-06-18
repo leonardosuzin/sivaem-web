@@ -70,9 +70,9 @@
 
                     // Redirecionar para a página adequada com base no tipo de usuário
                     if (data.tipo_usuario == 1) {
-                        window.location.href = 'view/adicionar_curriculo.php';
+                        window.location.href = '/sivaem-web-main/view/adicionar_curriculo.php';
                     } else if (data.tipo_usuario == 2) {
-                        window.location.href = 'view/adicionar_vaga.php';
+                        window.location.href = '/sivaem-web-main/view/adicionar_vaga.php';
                     } else {
                         console.error('Tipo de usuário desconhecido:', data.tipo_usuario);
                     }

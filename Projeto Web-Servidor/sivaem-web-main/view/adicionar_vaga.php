@@ -29,7 +29,9 @@
         
         <p></p>
         <a href="/sivaem-web-main/view/editar_vaga.php"><input type="button" class="btn btn-outline-success" value="Editar Vaga"></a>
-        <a href="/sivaem-web-main/view/busca_curriculo.php"><input type="button" class="btn btn-outline-warning" value="Buscar Currículos"></a>
+        <a href="/sivaem-web-main/view/busca_curriculo.php"><input type="button" class="btn btn-outline-info" value="Buscar Currículos"></a>
+        <a href="/sivaem-web-main/view/excluir_vaga.php"><input type="button" class="btn btn-outline-warning" value="Excluir vaga"></a>
+        <p></p>
         <a href="/sivaem-web-main/control/logout.php"><input type="button" class="btn btn-outline-danger" value="Voltar"></a>
     </div>
     <?php include "footer.php";?>
