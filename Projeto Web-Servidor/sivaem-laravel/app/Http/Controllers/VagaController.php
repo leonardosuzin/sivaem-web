@@ -85,9 +85,15 @@ class VagaController extends Controller
 
     public function destroy($id)
     {
+        $user = auth()->user(); // Obtém o usuário autenticado
         $vaga = Vaga::findOrFail($id);
+    
+        // Verifica se o usuário autenticado é o mesmo que criou a vaga
+        if ($vaga->id_user !== $user->id) {
+            return response()->json(['message' => 'Você não tem permissão para excluir esta vaga.'], 403);
+        }
+    
         $vaga->delete();
-
         return response()->json(['message' => 'Vaga excluída com sucesso!']);
     }
 }
