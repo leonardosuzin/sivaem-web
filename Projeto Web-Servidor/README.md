@@ -18,7 +18,9 @@ Agora, na pasta C:\xampp\htdocs\sivaem-laravel
 
 Após instalar o composer, utilizar o comando (composer global require "laravel/installer=~1.1") no terminal do projeto para instalar o laravel.
 
-Executar o comando php artisan migrate:fresh para gerar o banco de dados que será usado na aplicação.
+Executar o comando php artisan migrate para gerar o banco de dados que será usado na aplicação.
+
+Lembre de configurar o arquivo .env conforme indica env.example
 
 Utilizar o comando php artisan serve para rodar o servidor. Utilizar a porta 8000 para rodar o projeto.
 
