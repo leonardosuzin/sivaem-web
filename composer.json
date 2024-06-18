@@ -1,9 +1,0 @@
-{
-    "name": "vmarc/sivaem-web-main",
-    "type": "library",
-    "license": "MIT",
-    "autoload": {
-        "classmap": ["./"]
-    },
-    "require": {}
-}
